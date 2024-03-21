@@ -11,8 +11,10 @@ export default function Home() {
     push("/proposal-generator");
   }, []);
   return (
-    <div className="w-full h-full grid place-items-center">
-      <p>Redirecting to Proposal Generator.</p>
-    </div>
+    <main className="flex items-center min-h-[100vh] justify-center">
+      <div className="text-center p-6">
+        <p className="text-4xl font-bold">Welcome to the page</p>
+      </div>
+    </main>
   );
 }

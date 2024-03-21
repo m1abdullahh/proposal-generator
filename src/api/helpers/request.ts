@@ -1,8 +1,7 @@
 import { ApiResponse, create } from "apisauce";
 import { AxiosRequestConfig } from "axios";
 
-// const BASE_URL = "https://yt-clone.m1abdullah.tech";
-const BASE_URL = "http://54.162.198.154:8080";
+const BASE_URL = "https://server.proposal-generator.abdullahis.live";
 
 const instance = create({
   baseURL: BASE_URL,

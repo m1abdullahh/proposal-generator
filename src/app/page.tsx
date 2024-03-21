@@ -13,7 +13,9 @@ export default function Home() {
   return (
     <main className="flex items-center min-h-[100vh] justify-center">
       <div className="text-center p-6">
-        <p className="text-4xl font-bold">Welcome to the page</p>
+        <p className="text-4xl font-bold">
+          Redirecting to Proposal Genetator... 🚀
+        </p>
       </div>
     </main>
   );

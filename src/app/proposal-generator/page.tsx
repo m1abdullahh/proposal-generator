@@ -93,7 +93,7 @@ export default function ProposalGeneration() {
           className="ml-auto mr-auto px-10 py-6"
           type="submit"
         >
-          {isPending ? <HashLoader color="white" size={35} /> : "Generate"}
+          {isPending ? <HashLoader color="white" size={30} /> : "Generate"}
         </Button>
       </div>
       <div className="pt-12 pb-12 pl-4 pr-4">

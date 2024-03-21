@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { request } from "@/api/helpers/request";
 import { MutationConfig } from "@/api/helpers/reactQueryClient";
+import { IResponseMappings } from "@/lib/types";
 
 export type IPrompt = {
   jobDescription: string;
@@ -8,6 +9,7 @@ export type IPrompt = {
   experience?: number;
   additionalPrompt?: string;
 };
+
 export type PromptResponse = IResponseMappings<string>;
 
 const makePrompt = async (data: IPrompt): Promise<PromptResponse> => {

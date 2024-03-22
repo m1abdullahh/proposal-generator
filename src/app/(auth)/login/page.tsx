@@ -19,7 +19,9 @@ export default function Login() {
     setDataInLocalStorage({
       token: data.accessToken,
     });
-    router.replace("/");
+    setTimeout(() => {
+      router.replace("/");
+    }, 1500);
   };
   const handleError = (e: Error) => {
     toast.error(e.message);

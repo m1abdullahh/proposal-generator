@@ -40,11 +40,11 @@ interface LocalStorageData {
 const USERDATA = "USERDATA";
 
 export const setDataInLocalStorage = (data: LocalStorageData): void => {
-  sessionStorage.setItem(USERDATA, JSON.stringify(data));
+  localStorage.setItem(USERDATA, JSON.stringify(data));
 };
 
 export const getDataFromLocalStorage = (): LocalStorageData => {
-  const data = sessionStorage.getItem(USERDATA);
+  const data = localStorage.getItem(USERDATA);
   if (!data) {
     return {};
   }

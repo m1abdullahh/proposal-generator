@@ -9,6 +9,8 @@ import { SignUpResponse, useSignUp } from "@/api/useSignup";
 import { Toaster, toast } from "sonner";
 import { HashLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { removeDataFromLocalStorage } from "@/lib/utils";
 
 export default function Signup() {
   const router = useRouter();
@@ -56,6 +58,10 @@ export default function Signup() {
       );
     },
   });
+
+  useEffect(() => {
+    removeDataFromLocalStorage();
+  }, []);
   const { values, handleChange, errors, touched, handleSubmit } = form;
   return (
     <>

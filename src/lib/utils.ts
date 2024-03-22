@@ -50,3 +50,7 @@ export const getDataFromLocalStorage = (): LocalStorageData => {
   }
   return JSON.parse(data);
 };
+
+export const removeDataFromLocalStorage = (): void => {
+  localStorage.removeItem(USERDATA);
+};

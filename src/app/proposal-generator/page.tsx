@@ -6,12 +6,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 
 import { CommonJobDescriptions } from "@/lib/utils";
-import { PromptValidationSchema } from "@/lib/validationSchemas";
+import { PromptValidationSchema } from "@/lib/validations";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 const promptPair =
   CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
@@ -21,8 +22,11 @@ export default function ProposalGeneration() {
   const [completion, setCompletion] = useState<string>("");
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   const handleSuccess = (data: PromptResponse) => {
     setCompletion(data.data!);
+    queryClient.invalidateQueries({ queryKey: ["userProfile"] });
   };
 
   const handleError = (e: Error) => {

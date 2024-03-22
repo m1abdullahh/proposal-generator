@@ -10,6 +10,7 @@ export type UserPrpfileResponse = {
   password: string;
   active: true;
   emailVerified: true;
+  promptCredits: number;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -26,5 +27,7 @@ export const useGetProfile = (config?: MutationConfig<typeof getProfile>) => {
   return useQuery({
     queryKey: ["userProfile"],
     queryFn: getProfile,
+    retry: 0,
+    refetchInterval: 5000,
   });
 };

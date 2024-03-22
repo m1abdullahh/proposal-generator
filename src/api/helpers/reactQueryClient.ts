@@ -9,7 +9,7 @@ import { ApiErrorResponse } from "apisauce";
 const queryConfig: DefaultOptions = {
   queries: {
     refetchOnWindowFocus: true,
-    retry: false,
+    retry: 0,
     staleTime: Infinity,
   },
 };

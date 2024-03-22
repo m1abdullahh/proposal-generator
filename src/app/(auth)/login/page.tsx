@@ -9,8 +9,9 @@ import { SignInValidationSchema } from "@/lib/validations";
 import { Toaster, toast } from "sonner";
 import { HashLoader } from "react-spinners";
 import { getDataFromLocalStorage, setDataInLocalStorage } from "@/lib/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useGetProfile } from "@/api/useGetProfile";
 
 export default function Login() {
   const router = useRouter();

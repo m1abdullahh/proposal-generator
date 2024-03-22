@@ -12,3 +12,15 @@ export const SignInValidationSchema = Yup.object().shape({
   email: Yup.string().required().email(),
   password: Yup.string().required().min(8),
 });
+
+export const PromptValidationSchema = Yup.object().shape({
+  jobDescription: Yup.string().required().min(50),
+  name: Yup.string().required(),
+  experience: Yup.number().optional(),
+  additionalPrompts: Yup.string().optional(),
+});
+
+export const FeedbackValidationSchema = Yup.object().shape({
+  rating: Yup.number().required().min(1).max(5),
+  feedback: Yup.string().required(),
+});

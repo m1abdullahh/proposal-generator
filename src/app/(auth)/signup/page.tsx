@@ -15,14 +15,7 @@ import { removeDataFromLocalStorage } from "@/lib/utils";
 export default function Signup() {
   const router = useRouter();
   const handleSuccess = (data: SignUpResponse) => {
-    toast.success(data.message, {
-      action: {
-        label: "Sign In",
-        onClick: () => {
-          router.push("/login");
-        },
-      },
-    });
+    toast.success(data.message);
   };
   const handleError = (e: Error) => {
     toast.error(e.message);

@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-import rocketIcon from "../../public/rocket_icon.png";
+import rocketIcon from "~/public/rocket_icon.png";
 
 export function Footer() {
   return (
@@ -29,26 +28,6 @@ export function Footer() {
           <p className="text-xs text-gray-500 dark:text-gray-400 sm:mr-2">
             © 2024 ABServes, Inc. All rights reserved.
           </p>
-          <div className="flex gap-2 text-sm">
-            <Link
-              className="text-gray-500 underline dark:text-gray-400"
-              href="#"
-            >
-              Terms
-            </Link>
-            <Link
-              className="text-gray-500 underline dark:text-gray-400"
-              href="#"
-            >
-              Privacy
-            </Link>
-            <Link
-              className="text-gray-500 underline dark:text-gray-400"
-              href="#"
-            >
-              Policy
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

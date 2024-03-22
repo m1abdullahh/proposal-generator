@@ -28,6 +28,5 @@ export const useGetProfile = (config?: MutationConfig<typeof getProfile>) => {
     queryKey: ["userProfile"],
     queryFn: getProfile,
     retry: 0,
-    refetchInterval: 5000,
   });
 };

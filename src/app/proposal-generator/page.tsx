@@ -10,6 +10,8 @@ import { PromptValidationSchema } from "@/lib/validationSchemas";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { HashLoader } from "react-spinners";
+import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const promptPair =
   CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
@@ -17,9 +19,28 @@ const promptPair =
 export default function ProposalGeneration() {
   const { mutateAsync, isPending } = useMakePrompt();
   const [completion, setCompletion] = useState<string>("");
+  const router = useRouter();
 
   const handleSuccess = (data: PromptResponse) => {
     setCompletion(data.data!);
+  };
+
+  const handleError = (e: Error) => {
+    if (e.message === "Unauthorized") {
+      toast.error(e.message, {
+        description: "Make sure you're signed in.",
+        action: {
+          label: "Sign In",
+          onClick: () => {
+            router.push("/login");
+          },
+        },
+      });
+    } else {
+      toast.error(e.message, {
+        description: "Buy some credits.",
+      });
+    }
   };
 
   const form = useFormik<IPrompt>({
@@ -42,6 +63,9 @@ export default function ProposalGeneration() {
           onSuccess: (data) => {
             handleSuccess(data);
           },
+          onError: (e) => {
+            handleError(e);
+          },
         }
       );
     },
@@ -51,6 +75,7 @@ export default function ProposalGeneration() {
 
   return (
     <>
+      <Toaster closeButton />
       <div className="pt-12 pb-8 pl-4 pr-4">
         <Textarea
           placeholder={promptPair.prompt}

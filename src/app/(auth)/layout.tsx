@@ -8,8 +8,8 @@ import { QueryProvider } from "@/api/helpers/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Proposal Generator | ABServes",
-  description: "Created proposals to win jobs!",
+  title: "Auth | ABServes",
+  description: "Login to continue making appealing proposals!",
 };
 
 export default function RootLayout({
@@ -20,11 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <Header />
-          {children}
-          <Footer />
-        </QueryProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

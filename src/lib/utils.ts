@@ -32,3 +32,21 @@ export const CommonJobDescriptions: Array<IPromptCompletion> = [
       "Hi, I hope you're doing well! I have been working with Shopify store holder for more than X years now..",
   },
 ];
+
+interface LocalStorageData {
+  token?: string;
+}
+
+const USERDATA = "USERDATA";
+
+export const setDataInLocalStorage = (data: LocalStorageData): void => {
+  sessionStorage.setItem(USERDATA, JSON.stringify(data));
+};
+
+export const getDataFromLocalStorage = (): LocalStorageData => {
+  const data = sessionStorage.getItem(USERDATA);
+  if (!data) {
+    return {};
+  }
+  return JSON.parse(data);
+};

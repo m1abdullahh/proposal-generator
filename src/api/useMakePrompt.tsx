@@ -17,6 +17,7 @@ const makePrompt = async (data: IPrompt): Promise<PromptResponse> => {
     url: "generator/get-completion",
     method: "POST",
     data: data,
+    withAuthToken: true,
   });
 };
 export const useMakePrompt = (config?: MutationConfig<typeof makePrompt>) => {

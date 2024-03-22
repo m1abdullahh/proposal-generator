@@ -1,7 +1,9 @@
+import { getDataFromLocalStorage } from "@/lib/utils";
 import { ApiResponse, create } from "apisauce";
 import { AxiosRequestConfig } from "axios";
 
 const BASE_URL = "https://server.proposal-generator.abdullahis.live";
+// const BASE_URL = "http://localhost:3001";
 
 const instance = create({
   baseURL: BASE_URL,
@@ -35,17 +37,17 @@ export async function request({
     options.data = data;
   }
 
-  //   if (withAuthToken) {
-  //     const token = loadContentFromLocalStorage("authToken");
-  //     if (token) {
-  //       options.headers!.Authorization = "Bearer " + token;
-  //     }
-  //   }
+  if (withAuthToken) {
+    const token = getDataFromLocalStorage().token;
+    if (token) {
+      options.headers!.Authorization = "Bearer " + token;
+    }
+  }
 
   const fetchResponse: ApiResponse<any> = await instance.any(options);
   if (fetchResponse.problem) {
     console.log("api error =>", fetchResponse.data);
-    return Promise.reject(fetchResponse);
+    return Promise.reject(fetchResponse.data);
   }
   return fetchResponse.data;
 }

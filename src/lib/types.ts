@@ -1,5 +1,5 @@
 export interface IResponseMappings<T> {
-  status?: number;
+  statusCode?: number;
   message?: string;
   data?: T;
   success?: boolean;

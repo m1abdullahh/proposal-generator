@@ -7,6 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Proposal Generator | ABServes",
   description: "Created proposals to win jobs!",
+  authors: {
+    name: "Abdullah K.",
+    url: "https://www.linkedin.com/in/m1abdullah",
+  },
 };
 
 export default function RootLayout({

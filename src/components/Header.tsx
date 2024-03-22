@@ -27,7 +27,7 @@ export default function Header() {
           }}
           width="40"
         />
-        <h1 className="text-xl font-bold">Proposal Generator</h1>
+        <h1 className="text-xl font-bold">Upwork Proposal Generator</h1>
       </div>
       <div className="flex items-center space-x-2">
         <Button className="bg-[#FFD700] text-black">Be Premium</Button>

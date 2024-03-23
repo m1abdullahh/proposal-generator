@@ -11,10 +11,11 @@ interface HistoryProps {
 }
 
 export function History({ prompt, completion, date, isFirst }: HistoryProps) {
-  const handleClick = (e: MouseEvent<HTMLParagraphElement, any>) => {
-    navigator.clipboard.writeText(
-      (e.target as HTMLParagraphElement).textContent as string
-    );
+  const handleClick = (
+    e: MouseEvent<HTMLParagraphElement, any>,
+    text: "prompt" | "completion"
+  ) => {
+    navigator.clipboard.writeText(text === "prompt" ? prompt : completion);
     toast.success("Copied to clipboard.");
   };
   return (
@@ -33,7 +34,7 @@ export function History({ prompt, completion, date, isFirst }: HistoryProps) {
             </h3>
             <p
               className="max-w-[900px] text-xs tracking-wide/relaxed text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 hover:text-black hover:cursor-pointer"
-              onClick={(e) => handleClick(e)}
+              onClick={(e) => handleClick(e, "prompt")}
             >
               {prompt.slice(0, 150)}...
             </p>
@@ -44,7 +45,7 @@ export function History({ prompt, completion, date, isFirst }: HistoryProps) {
             </h3>
             <p
               className="max-w-[900px] text-xs tracking-wide/relaxed text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 hover:text-black hover:cursor-pointer"
-              onClick={(e) => handleClick(e)}
+              onClick={(e) => handleClick(e, "completion")}
             >
               {completion.slice(0, 250)}...
             </p>

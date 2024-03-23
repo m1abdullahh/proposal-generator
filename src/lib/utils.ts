@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import moment from "moment";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -54,3 +55,11 @@ export const getDataFromLocalStorage = (): LocalStorageData => {
 export const removeDataFromLocalStorage = (): void => {
   localStorage.removeItem(USERDATA);
 };
+
+export function formatDate(momentDate: string) {
+  const parsedMoment = moment(momentDate);
+
+  const formattedString = parsedMoment.format("ddd DD MMMM, YYYY @ HH:mm");
+
+  return formattedString;
+}

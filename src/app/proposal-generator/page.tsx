@@ -13,6 +13,7 @@ import { HashLoader } from "react-spinners";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { SideNavBar } from "@/components/SIdeNav";
 
 const promptPair =
   CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
@@ -27,6 +28,7 @@ export default function ProposalGeneration() {
   const handleSuccess = (data: PromptResponse) => {
     setCompletion(data.data!);
     queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+    queryClient.invalidateQueries({ queryKey: ["myPrompts"] });
   };
 
   const handleError = (e: Error) => {
@@ -80,60 +82,65 @@ export default function ProposalGeneration() {
   return (
     <>
       <Toaster closeButton />
-      <div className="pt-12 pb-8 pl-4 pr-4">
-        <Textarea
-          placeholder={promptPair.prompt}
-          className="h-60 text-lg"
-          value={values.jobDescription}
-          onChange={handleChange("jobDescription")}
-        />
-        <div className="flex flex-row items-center pt-4">
-          <label>Your Name:</label>
-          <Input
-            type="text"
-            placeholder="Ebad Abid"
-            className="w-40 mx-5"
-            value={values.name}
-            onChange={handleChange("name")}
-          />
-          <label>Experience:</label>
-          <Input
-            type="number"
-            placeholder="6"
-            className="w-40 ml-5"
-            value={values.experience}
-            onChange={handleChange("experience")}
-          />
-          <label className="ml-4">Additional Prompts for AI:</label>
-          <Input
-            type="text"
-            placeholder="Be a bit frank."
-            className="w-40 ml-5"
-            value={values.additionalPrompt}
-            onChange={handleChange("additionalPrompt")}
-          />
-        </div>
-      </div>
-      <div className="container mx-0 min-w-full flex flex-col items-center">
-        <Button
-          onClick={(e) => {
-            handleSubmit();
-          }}
-          className="ml-auto mr-auto px-10 py-6"
-          type="submit"
-        >
-          {isPending ? <HashLoader color="white" size={30} /> : "Generate"}
-        </Button>
-      </div>
-      <div className="pt-12 pb-12 pl-4 pr-4">
-        <Textarea
-          placeholder={promptPair.completion}
-          className="h-60 text-lg"
-          value={completion}
-          readOnly
-        />
-        <div className="container !pr-0 mx-0 min-w-full flex flex-col items-center">
-          <p className="self-end">Powered by AnthropicAI Claude 3 Opus</p>
+      <div className="flex flex-row">
+        <SideNavBar />
+        <div className="w-full">
+          <div className="pt-12 pb-8 pl-4 pr-4">
+            <Textarea
+              placeholder={promptPair.prompt}
+              className="h-60 text-lg"
+              value={values.jobDescription}
+              onChange={handleChange("jobDescription")}
+            />
+            <div className="flex flex-row items-center pt-4">
+              <label>Your Name:</label>
+              <Input
+                type="text"
+                placeholder="Ebad Abid"
+                className="w-40 mx-5"
+                value={values.name}
+                onChange={handleChange("name")}
+              />
+              <label>Experience:</label>
+              <Input
+                type="number"
+                placeholder="6"
+                className="w-40 ml-5"
+                value={values.experience}
+                onChange={handleChange("experience")}
+              />
+              <label className="ml-4">Additional Prompts for AI:</label>
+              <Input
+                type="text"
+                placeholder="Be a bit frank."
+                className="w-40 ml-5"
+                value={values.additionalPrompt}
+                onChange={handleChange("additionalPrompt")}
+              />
+            </div>
+          </div>
+          <div className="container mx-0 min-w-full flex flex-col items-center">
+            <Button
+              onClick={(e) => {
+                handleSubmit();
+              }}
+              className="ml-auto mr-auto px-10 py-6"
+              type="submit"
+            >
+              {isPending ? <HashLoader color="white" size={30} /> : "Generate"}
+            </Button>
+          </div>
+          <div className="pt-12 pb-12 pl-4 pr-4">
+            <Textarea
+              placeholder={promptPair.completion}
+              className="h-60 text-lg"
+              value={completion}
+              readOnly
+            />
+            <div className="container !pr-0 mx-0 min-w-full flex flex-col items-center">
+              <p className="self-end">Powered by AnthropicAI Claude 3 Opus</p>
+            </div>
+          </div>
         </div>
       </div>
     </>

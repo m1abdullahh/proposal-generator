@@ -14,11 +14,12 @@ import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { SideNavBar } from "@/components/SIdeNav";
-
-const promptPair =
-  CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
+import { CopyIcon } from "@radix-ui/react-icons";
+import clsx from "clsx";
 
 export default function ProposalGeneration() {
+  const promptPair =
+    CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
   const { mutateAsync, isPending } = useMakePrompt();
   const [completion, setCompletion] = useState<string>("");
   const router = useRouter();
@@ -29,6 +30,14 @@ export default function ProposalGeneration() {
     setCompletion(data.data!);
     queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     queryClient.invalidateQueries({ queryKey: ["myPrompts"] });
+  };
+
+  const handleCopyClick = () => {
+    if (completion === "") {
+      return toast.error("Nothing to copy.");
+    }
+    navigator.clipboard.writeText(completion);
+    toast.success("Copied to clipboard.");
   };
 
   const handleError = (e: Error) => {
@@ -85,7 +94,7 @@ export default function ProposalGeneration() {
       <div className="flex flex-row">
         <SideNavBar />
         <div className="w-full">
-          <div className="pt-12 pb-8 pl-4 pr-4">
+          <div className="pt-4 pb-8 pl-4 pr-4">
             <Textarea
               placeholder={promptPair.prompt}
               className="h-60 text-lg"
@@ -109,7 +118,7 @@ export default function ProposalGeneration() {
                 value={values.experience}
                 onChange={handleChange("experience")}
               />
-              <label className="ml-4">Additional Prompts for AI:</label>
+              <label className="ml-4">Additional Prompt for AI:</label>
               <Input
                 type="text"
                 placeholder="Be a bit frank."
@@ -122,21 +131,30 @@ export default function ProposalGeneration() {
           <div className="container mx-0 min-w-full flex flex-col items-center">
             <Button
               onClick={(e) => {
-                handleSubmit();
+                if (!isPending) handleSubmit();
               }}
-              className="ml-auto mr-auto px-10 py-6"
+              className={clsx(
+                "ml-auto mr-auto px-10 py-6",
+                `${isPending ? "cursor-wait" : ""}`
+              )}
               type="submit"
             >
               {isPending ? <HashLoader color="white" size={30} /> : "Generate"}
             </Button>
           </div>
-          <div className="pt-12 pb-12 pl-4 pr-4">
+          <div className="py-12 relative px-4">
             <Textarea
               placeholder={promptPair.completion}
               className="h-60 text-lg"
               value={completion}
               readOnly
             />
+            <Button
+              onClick={() => handleCopyClick()}
+              className="absolute right-4 top-0"
+            >
+              <CopyIcon />
+            </Button>
             <div className="container !pr-0 mx-0 min-w-full flex flex-col items-center">
               <p className="self-end">Powered by AnthropicAI Claude 3 Opus</p>
             </div>

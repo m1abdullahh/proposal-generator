@@ -24,3 +24,12 @@ export const FeedbackValidationSchema = Yup.object().shape({
   rating: Yup.number().required().min(1).max(5),
   feedback: Yup.string().required(),
 });
+
+export const AccountRecoveryValidationSchema = Yup.object().shape({
+  email: Yup.string().email().required(),
+});
+
+export const ResetPasswordValidationSchema = Yup.object().shape({
+  newPassword: Yup.string().min(8).required(),
+  newPasswordConfirm: Yup.string().min(8).required(),
+});

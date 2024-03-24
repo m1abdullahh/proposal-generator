@@ -8,7 +8,7 @@ export function SideNavBar() {
   const router = useRouter();
   const handleLogout = () => {
     removeDataFromLocalStorage();
-    router.replace("/login");
+    location.reload();
   };
   const pathName = usePathname();
   return (

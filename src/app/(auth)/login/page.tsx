@@ -11,7 +11,6 @@ import { HashLoader } from "react-spinners";
 import { getDataFromLocalStorage, setDataInLocalStorage } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useGetProfile } from "@/api/useGetProfile";
 
 export default function Login() {
   const router = useRouter();
@@ -149,7 +148,7 @@ export default function Login() {
                     </div>
                   </div>
                   <Link
-                    href="#"
+                    href="/account-recovery"
                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Forgot password?

@@ -23,7 +23,7 @@ export const CommonJobDescriptions: Array<IPromptCompletion> = [
       "Hi {Client}, I have over X years of experience in this field..",
   },
   {
-    prompt: "Full Stack Mobile App Developer Urgent...",
+    prompt: "Full Stack Mobile App Developer Needed Urgent...",
     completion:
       "Hey! As a full stack app developer with over 6 years of experience, I beleive...",
   },

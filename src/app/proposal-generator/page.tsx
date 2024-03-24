@@ -13,13 +13,19 @@ import { HashLoader } from "react-spinners";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { SideNavBar } from "@/components/SIdeNav";
-import { CopyIcon } from "@radix-ui/react-icons";
+import { SideNavBar } from "@/components/SideNav";
+import {
+  CopyIcon,
+  GearIcon,
+  MinusIcon,
+  ResetIcon,
+} from "@radix-ui/react-icons";
 import clsx from "clsx";
 
+const promptPair =
+  CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
+
 export default function ProposalGeneration() {
-  const promptPair =
-    CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
   const { mutateAsync, isPending } = useMakePrompt();
   const [completion, setCompletion] = useState<string>("");
   const router = useRouter();
@@ -38,6 +44,11 @@ export default function ProposalGeneration() {
     }
     navigator.clipboard.writeText(completion);
     toast.success("Copied to clipboard.");
+  };
+
+  const handleClearClick = () => {
+    setCompletion("");
+    resetForm();
   };
 
   const handleError = (e: Error) => {
@@ -86,7 +97,8 @@ export default function ProposalGeneration() {
     },
   });
 
-  const { values, handleSubmit, handleChange, errors } = form;
+  const { values, handleSubmit, handleChange, errors, touched, resetForm } =
+    form;
 
   return (
     <>
@@ -95,9 +107,22 @@ export default function ProposalGeneration() {
         <SideNavBar />
         <div className="w-full">
           <div className="pt-4 pb-8 pl-4 pr-4">
+            <div className="flex pb-3 justify-end">
+              <Button onClick={() => handleClearClick()}>
+                <ResetIcon />
+                <p className="pl-2">Clear prompt</p>
+              </Button>
+            </div>
             <Textarea
               placeholder={promptPair.prompt}
-              className="h-60 text-lg"
+              className={clsx(
+                "h-60 text-lg",
+                `${
+                  touched.jobDescription &&
+                  errors.jobDescription &&
+                  "border border-red-500"
+                }`
+              )}
               value={values.jobDescription}
               onChange={handleChange("jobDescription")}
             />
@@ -106,7 +131,10 @@ export default function ProposalGeneration() {
               <Input
                 type="text"
                 placeholder="Ebad Abid"
-                className="w-40 mx-5"
+                className={clsx(
+                  "w-40 mx-5",
+                  `${touched.name && errors.name && "border border-red-500"}`
+                )}
                 value={values.name}
                 onChange={handleChange("name")}
               />
@@ -126,6 +154,18 @@ export default function ProposalGeneration() {
                 value={values.additionalPrompt}
                 onChange={handleChange("additionalPrompt")}
               />
+              <p
+                className={clsx(
+                  "text-end ml-auto bottom-2",
+                  `${
+                    touched.jobDescription && errors.jobDescription
+                      ? "text-red-500"
+                      : values.jobDescription.length >= 50 && "text-green-500"
+                  }`
+                )}
+              >
+                {values.jobDescription.length}/50 characters min.
+              </p>
             </div>
           </div>
           <div className="container mx-0 min-w-full flex flex-col items-center">
@@ -134,12 +174,19 @@ export default function ProposalGeneration() {
                 if (!isPending) handleSubmit();
               }}
               className={clsx(
-                "ml-auto mr-auto px-10 py-6",
+                "ml-auto mr-auto px-8 py-6",
                 `${isPending ? "cursor-wait" : ""}`
               )}
               type="submit"
             >
-              {isPending ? <HashLoader color="white" size={30} /> : "Generate"}
+              {isPending ? (
+                <HashLoader className="px-11 py-6" color="white" size={30} />
+              ) : (
+                <>
+                  <GearIcon />
+                  <p className="pl-3">Generate</p>
+                </>
+              )}
             </Button>
           </div>
           <div className="py-12 relative px-4">
@@ -154,6 +201,7 @@ export default function ProposalGeneration() {
               className="absolute right-4 top-0"
             >
               <CopyIcon />
+              <p className="pl-2">Copy to clipboard</p>
             </Button>
             <div className="container !pr-0 mx-0 min-w-full flex flex-col items-center">
               <p className="self-end">Powered by AnthropicAI Claude 3 Opus</p>

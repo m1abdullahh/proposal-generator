@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <>
       <header className="flex items-center justify-between bg-white py-4 px-8 border border-b-gray-200">
-        <Link href="/">
+        <Link href="/proposal-generator">
           <div className="flex items-center space-x-4">
             <Image
               alt="Logo"
@@ -37,9 +37,6 @@ export default function Header() {
           </div>
         </Link>
         <div className="flex items-center space-x-2">
-          {/* <Button className="bg-[#FFD700] text-black hover:text-[#FFD700] hover:bg-black">
-          Buy Credits
-        </Button> */}
           {fetchingProfile ? (
             <ClipLoader size={28} color="black" />
           ) : hasError ? (

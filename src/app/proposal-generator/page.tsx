@@ -13,7 +13,7 @@ import { HashLoader } from "react-spinners";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { SideNavBar } from "@/components/SideNav";
+import { SideNavBar } from "@/components/SideNavBar";
 import {
   CopyIcon,
   GearIcon,

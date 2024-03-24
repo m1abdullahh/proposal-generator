@@ -1,6 +1,6 @@
 "use client";
 import { Toaster } from "sonner";
-import { SideNavBar } from "@/components/SideNav";
+import { SideNavBar } from "@/components/SideNavBar";
 
 import { History } from "@/components/History";
 import { useGetPrompts } from "@/api/useGetPrompts";

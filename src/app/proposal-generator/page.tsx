@@ -1,6 +1,6 @@
 "use client";
 
-import { IPrompt, PromptResponse, useMakePrompt } from "@/api";
+import { GeneratorModel, IPrompt, PromptResponse, useMakePrompt } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -75,6 +75,7 @@ export default function ProposalGeneration() {
       name: "",
       experience: 0,
       additionalPrompt: "",
+      model: GeneratorModel.GPT_4,
     },
     validationSchema: PromptValidationSchema,
     onSubmit: (val) => {
@@ -84,6 +85,7 @@ export default function ProposalGeneration() {
           name: val.name,
           experience: val.experience ?? undefined,
           additionalPrompt: val.additionalPrompt ?? undefined,
+          model: val.model,
         },
         {
           onSuccess: (data) => {

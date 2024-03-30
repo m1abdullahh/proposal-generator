@@ -1,3 +1,4 @@
+import { GeneratorModel } from "@/api";
 import * as Yup from "yup";
 
 export const RegisterValidationSchema = Yup.object().shape({
@@ -18,6 +19,10 @@ export const PromptValidationSchema = Yup.object().shape({
   name: Yup.string().required(),
   experience: Yup.number().optional(),
   additionalPrompts: Yup.string().optional(),
+  model: Yup.string()
+    .required()
+    .equals([GeneratorModel.CLAUDE_3, GeneratorModel.GPT_4])
+    .default(GeneratorModel.GPT_4),
 });
 
 export const FeedbackValidationSchema = Yup.object().shape({

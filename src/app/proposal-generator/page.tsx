@@ -172,7 +172,7 @@ export default function ProposalGeneration() {
                     Claude 3 Opus - High Quality
                   </SelectItem>
                   <SelectItem value={GeneratorModel.GPT_4}>
-                    GPT 4 - Super Fast
+                    GPT 4 Turbo - Super Fast
                   </SelectItem>
                 </SelectContent>
               </Select>

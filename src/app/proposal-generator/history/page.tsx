@@ -32,6 +32,7 @@ export default function ProposalGeneration() {
                     prompt={i.prompt}
                     isFirst={ix === 0}
                     key={i._id}
+                    model={i.model}
                   />
                 );
               })

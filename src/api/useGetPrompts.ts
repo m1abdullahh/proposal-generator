@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { request } from "@/api/helpers/request";
 import { MutationConfig } from "@/api/helpers/reactQueryClient";
+import { GeneratorModel } from ".";
 
 export type UserPrompt = {
   _id: string;
   prompt: string;
   completion: string;
   createdAt: string;
+  model: GeneratorModel;
 };
 
 const getPrompts = async (): Promise<Array<UserPrompt>> => {

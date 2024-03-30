@@ -1,3 +1,5 @@
+import { GeneratorModel } from "@/api";
+import { ModelNameMappings } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import clsx from "clsx";
 import { MouseEvent } from "react";
@@ -8,9 +10,16 @@ interface HistoryProps {
   completion: string;
   date: string;
   isFirst: boolean;
+  model: GeneratorModel;
 }
 
-export function History({ prompt, completion, date, isFirst }: HistoryProps) {
+export function History({
+  prompt,
+  completion,
+  date,
+  isFirst,
+  model,
+}: HistoryProps) {
   const handleClick = (
     e: MouseEvent<HTMLParagraphElement, any>,
     text: "prompt" | "completion"
@@ -41,7 +50,7 @@ export function History({ prompt, completion, date, isFirst }: HistoryProps) {
           </div>
           <div className="space-y-2">
             <h3 className="text-base font-semibold tracking-wide uppercase text-gray-500">
-              AI
+              AI - {ModelNameMappings[model]}
             </h3>
             <p
               className="max-w-[900px] text-xs tracking-wide/relaxed text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 hover:text-black hover:cursor-pointer"

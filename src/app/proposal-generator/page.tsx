@@ -14,12 +14,14 @@ import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { SideNavBar } from "@/components/SideNavBar";
+import { CopyIcon, GearIcon, ResetIcon } from "@radix-ui/react-icons";
 import {
-  CopyIcon,
-  GearIcon,
-  MinusIcon,
-  ResetIcon,
-} from "@radix-ui/react-icons";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import clsx from "clsx";
 
 const promptPair =
@@ -47,8 +49,8 @@ export default function ProposalGeneration() {
   };
 
   const handleClearClick = () => {
+    setFieldValue("jobDescription", "");
     setCompletion("");
-    resetForm();
   };
 
   const handleError = (e: Error) => {
@@ -79,6 +81,7 @@ export default function ProposalGeneration() {
     },
     validationSchema: PromptValidationSchema,
     onSubmit: (val) => {
+      setCompletion("");
       mutateAsync(
         {
           jobDescription: val.jobDescription,
@@ -99,7 +102,7 @@ export default function ProposalGeneration() {
     },
   });
 
-  const { values, handleSubmit, handleChange, errors, touched, resetForm } =
+  const { values, handleSubmit, handleChange, errors, touched, setFieldValue } =
     form;
 
   return (
@@ -134,7 +137,7 @@ export default function ProposalGeneration() {
                 type="text"
                 placeholder="Ebad Abid"
                 className={clsx(
-                  "w-40 mx-5",
+                  "w-40 mx-2",
                   `${touched.name && errors.name && "border border-red-500"}`
                 )}
                 value={values.name}
@@ -144,7 +147,7 @@ export default function ProposalGeneration() {
               <Input
                 type="number"
                 placeholder="6"
-                className="w-40 ml-5"
+                className="w-40 ml-2"
                 value={values.experience}
                 onChange={handleChange("experience")}
               />
@@ -152,10 +155,28 @@ export default function ProposalGeneration() {
               <Input
                 type="text"
                 placeholder="Be a bit frank."
-                className="w-40 ml-5"
+                className="w-40 ml-2"
                 value={values.additionalPrompt}
                 onChange={handleChange("additionalPrompt")}
               />
+              <Select
+                defaultValue={GeneratorModel.GPT_4}
+                value={values.model}
+                onValueChange={handleChange("model")}
+              >
+                <SelectTrigger className="w-[180px] ml-5">
+                  <SelectValue placeholder="Model" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={GeneratorModel.CLAUDE_3}>
+                    Claude 3 Opus - High Quality
+                  </SelectItem>
+                  <SelectItem value={GeneratorModel.GPT_4}>
+                    ChatGPT 4 - Super Fast
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
               <p
                 className={clsx(
                   "text-end ml-auto bottom-2",
@@ -205,9 +226,6 @@ export default function ProposalGeneration() {
               <CopyIcon />
               <p className="pl-2">Copy to clipboard</p>
             </Button>
-            <div className="container !pr-0 mx-0 min-w-full flex flex-col items-center">
-              <p className="self-end">Powered by AnthropicAI Claude 3 Opus</p>
-            </div>
           </div>
         </div>
       </div>

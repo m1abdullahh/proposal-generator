@@ -77,7 +77,7 @@ export default function ProposalGeneration() {
       name: "",
       experience: 0,
       additionalPrompt: "",
-      model: GeneratorModel.GPT_4,
+      model: GeneratorModel.CLAUDE_3,
     },
     validationSchema: PromptValidationSchema,
     onSubmit: (val) => {

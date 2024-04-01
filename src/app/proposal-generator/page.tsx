@@ -159,6 +159,7 @@ export default function ProposalGeneration() {
                 value={values.additionalPrompt}
                 onChange={handleChange("additionalPrompt")}
               />
+              <label className="ml-4">AI Model:</label>
               <Select
                 defaultValue={GeneratorModel.GPT_4}
                 value={values.model}

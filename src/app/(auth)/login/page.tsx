@@ -9,11 +9,12 @@ import { SignInValidationSchema } from "@/lib/validations";
 import { Toaster, toast } from "sonner";
 import { HashLoader } from "react-spinners";
 import { getDataFromLocalStorage, setDataInLocalStorage } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
+  const params = useSearchParams();
   const handleSuccess = (data: LoginResponse) => {
     toast.success("Signed in Successfully.");
     setDataInLocalStorage({
@@ -55,6 +56,14 @@ export default function Login() {
       router.replace("/");
     }
   }, [router]);
+
+  useEffect(() => {
+    const code = params.get("emailVerified");
+    if (code && code === "true")
+      toast.success("Email has been verified.", {
+        description: "You can now login.",
+      });
+  }, [params]);
   const { values, handleChange, errors, touched, handleSubmit } = form;
   return (
     <>

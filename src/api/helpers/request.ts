@@ -2,8 +2,8 @@ import { getDataFromLocalStorage } from "@/lib/utils";
 import { ApiResponse, create } from "apisauce";
 import { AxiosRequestConfig } from "axios";
 
-const BASE_URL = "https://server.proposal-generator.abdullahis.live";
-// const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "https://server.proposal-generator.abdullahis.live";
+// export const BASE_URL = "http://localhost:8080";
 
 const instance = create({
   baseURL: BASE_URL,

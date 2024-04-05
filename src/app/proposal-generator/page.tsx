@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { CommonJobDescriptions } from "@/lib/utils";
 import { PromptValidationSchema } from "@/lib/validations";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -23,19 +23,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import clsx from "clsx";
+import { ApiError, getCompletion } from "@/api/useGetCompletion";
 
 const promptPair =
   CommonJobDescriptions[~~(Math.random() * CommonJobDescriptions.length)];
 
 export default function ProposalGeneration() {
-  const { mutateAsync, isPending } = useMakePrompt();
   const [completion, setCompletion] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const queryClient = useQueryClient();
 
-  const handleSuccess = (data: PromptResponse) => {
-    setCompletion(data.data!);
+  const handleSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     queryClient.invalidateQueries({ queryKey: ["myPrompts"] });
   };
@@ -53,21 +54,29 @@ export default function ProposalGeneration() {
     setCompletion("");
   };
 
-  const handleError = (e: Error) => {
-    if (e.message === "Unauthorized") {
-      toast.error(e.message, {
-        description: "Make sure you're signed in.",
-        action: {
-          label: "Sign In",
-          onClick: () => {
-            router.push("/login");
+  const handleError = (e: ApiError) => {
+    switch (e.statusCode) {
+      case 401:
+        toast.error(e.message, {
+          description: "Make sure you're signed in.",
+          action: {
+            label: "Sign In",
+            onClick: () => {
+              router.push("/login");
+            },
           },
-        },
-      });
-    } else {
-      toast.error(e.message, {
-        description: "Buy some credits.",
-      });
+        });
+        break;
+      case 429:
+        toast.error("Not enough credits.", {
+          description: "Buy some credits.",
+        });
+        break;
+      default:
+        toast.error(e.statusCode, {
+          description: e.message,
+          important: true,
+        });
     }
   };
 
@@ -80,25 +89,30 @@ export default function ProposalGeneration() {
       model: GeneratorModel.CLAUDE_3,
     },
     validationSchema: PromptValidationSchema,
-    onSubmit: (val) => {
+    onSubmit: async (val) => {
+      setLoading(true);
       setCompletion("");
-      mutateAsync(
-        {
-          jobDescription: val.jobDescription,
-          name: val.name,
-          experience: val.experience ?? undefined,
-          additionalPrompt: val.additionalPrompt ?? undefined,
-          model: val.model,
-        },
-        {
-          onSuccess: (data) => {
-            handleSuccess(data);
-          },
-          onError: (e) => {
-            handleError(e);
-          },
+      try {
+        const { reader: responseReader } = await getCompletion(val);
+        while (true) {
+          const { done, value } = await responseReader.read();
+          if (textAreaRef.current) {
+            const { scrollHeight, clientHeight } = textAreaRef.current;
+            textAreaRef.current.scrollTop = scrollHeight - clientHeight;
+          }
+          if (done) {
+            setLoading(false);
+            setTimeout(handleSuccess, 2000);
+            break;
+          }
+          setCompletion(
+            (completion) => completion + new TextDecoder().decode(value)
+          );
         }
-      );
+      } catch (e) {
+        setLoading(false);
+        handleError(e as ApiError);
+      }
     },
   });
 
@@ -107,7 +121,7 @@ export default function ProposalGeneration() {
 
   return (
     <>
-      <Toaster closeButton />
+      <Toaster closeButton richColors />
       <div className="flex flex-row">
         <SideNavBar />
         <div className="w-full">
@@ -195,15 +209,15 @@ export default function ProposalGeneration() {
           <div className="container mx-0 min-w-full flex flex-col items-center">
             <Button
               onClick={(e) => {
-                if (!isPending) handleSubmit();
+                if (!loading) handleSubmit();
               }}
               className={clsx(
                 "ml-auto mr-auto px-8 py-6",
-                `${isPending ? "cursor-wait" : ""}`
+                `${loading ? "cursor-wait" : ""}`
               )}
               type="submit"
             >
-              {isPending ? (
+              {loading ? (
                 <HashLoader className="px-11 py-6" color="white" size={30} />
               ) : (
                 <>
@@ -215,6 +229,7 @@ export default function ProposalGeneration() {
           </div>
           <div className="py-12 relative px-4">
             <Textarea
+              ref={textAreaRef}
               placeholder={promptPair.completion}
               className="h-60 text-lg"
               value={completion}

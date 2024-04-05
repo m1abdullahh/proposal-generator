@@ -33,7 +33,7 @@ export default function Header() {
               }}
               width="40"
             />
-            <h1 className="text-xl font-bold">Upwork Proposal Generator</h1>
+            <h1 className="text-xl font-bold">AI Paraphrasing Tool</h1>
           </div>
         </Link>
         <div className="flex items-center space-x-2">

@@ -44,6 +44,7 @@ export function History({
             <p
               className="max-w-[900px] text-xs tracking-wide/relaxed text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 hover:text-black hover:cursor-pointer"
               onClick={(e) => handleClick(e, "prompt")}
+              title={prompt}
             >
               {prompt.slice(0, 150)}...
             </p>
@@ -55,6 +56,7 @@ export function History({
             <p
               className="max-w-[900px] text-xs tracking-wide/relaxed text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 hover:text-black hover:cursor-pointer"
               onClick={(e) => handleClick(e, "completion")}
+              title={completion}
             >
               {completion.slice(0, 250)}...
             </p>

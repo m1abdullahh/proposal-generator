@@ -23,9 +23,9 @@ export const getCompletion = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${getDataFromLocalStorage().token || ""}`,
     },
+    cache: "no-cache",
   });
   if (!response.ok) {
-    console.log(response);
     const res: { message: string; error: string; statusCode: number } =
       await response.json();
     throw new ApiError(res.message, res.error, res.statusCode);

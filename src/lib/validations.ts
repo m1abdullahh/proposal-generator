@@ -21,7 +21,11 @@ export const PromptValidationSchema = Yup.object().shape({
   additionalPrompts: Yup.string().optional(),
   model: Yup.string()
     .required()
-    .equals([GeneratorModel.CLAUDE_3, GeneratorModel.GPT_4])
+    .equals([
+      GeneratorModel.CLAUDE_3,
+      GeneratorModel.GPT_4,
+      GeneratorModel.GEMINI_PRO,
+    ])
     .default(GeneratorModel.GPT_4),
 });
 

@@ -6,6 +6,7 @@ import { IResponseMappings } from "@/lib/types";
 export enum GeneratorModel {
   GPT_4 = "GPT_4",
   CLAUDE_3 = "CLAUDE_3",
+  GEMINI_PRO = "GEMINI_PRO",
 }
 
 export type IPrompt = {

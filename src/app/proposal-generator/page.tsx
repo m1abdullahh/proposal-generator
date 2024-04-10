@@ -86,7 +86,7 @@ export default function ProposalGeneration() {
       name: "",
       experience: 0,
       additionalPrompt: "",
-      model: GeneratorModel.CLAUDE_3,
+      model: GeneratorModel.GEMINI_PRO,
     },
     validationSchema: PromptValidationSchema,
     onSubmit: async (val) => {
@@ -175,7 +175,7 @@ export default function ProposalGeneration() {
               />
               <label className="ml-4">AI Model:</label>
               <Select
-                defaultValue={GeneratorModel.GPT_4}
+                defaultValue={GeneratorModel.GEMINI_PRO}
                 value={values.model}
                 onValueChange={handleChange("model")}
               >
@@ -183,10 +183,13 @@ export default function ProposalGeneration() {
                   <SelectValue placeholder="Model" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={GeneratorModel.CLAUDE_3}>
+                  <SelectItem value={GeneratorModel.GEMINI_PRO}>
+                    Gemini Pro - Fast + Reliable
+                  </SelectItem>
+                  <SelectItem disabled value={GeneratorModel.CLAUDE_3}>
                     Claude 3 Opus - High Quality
                   </SelectItem>
-                  <SelectItem value={GeneratorModel.GPT_4}>
+                  <SelectItem disabled value={GeneratorModel.GPT_4}>
                     GPT 4 Turbo - Super Fast
                   </SelectItem>
                 </SelectContent>
@@ -209,6 +212,7 @@ export default function ProposalGeneration() {
           <div className="container mx-0 min-w-full flex flex-col items-center">
             <Button
               onClick={(e) => {
+                console.log(errors);
                 if (!loading) handleSubmit();
               }}
               className={clsx(

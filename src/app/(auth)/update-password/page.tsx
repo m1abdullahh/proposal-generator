@@ -13,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { HashLoader } from "react-spinners";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import RocketIcon from "~/public/rocket_icon.png";
 
 export default function UpdatePassword() {
@@ -63,7 +63,7 @@ export default function UpdatePassword() {
   const { mutateAsync, isPending } = useResetPassword();
 
   return (
-    <>
+    <main>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <Link
@@ -158,6 +158,6 @@ export default function UpdatePassword() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }

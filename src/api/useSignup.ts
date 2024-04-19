@@ -1,10 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { request } from "@/api/helpers/request";
-import {
-  ExtractFnReturnType,
-  MutationConfig,
-} from "@/api/helpers/reactQueryClient";
-import { IResponseMappings } from "@/lib/types";
+import { MutationConfig } from "@/api/helpers/reactQueryClient";
 
 type SignupData = {
   username: string;

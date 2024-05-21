@@ -8,6 +8,7 @@ export const BASE_URL = "https://server.proposal-generator.abdullahis.live";
 const instance = create({
   baseURL: BASE_URL,
 });
+
 interface Request {
   url: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";

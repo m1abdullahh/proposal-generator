@@ -27,6 +27,7 @@ export function History({
     navigator.clipboard.writeText(text === "prompt" ? prompt : completion);
     toast.success("Copied to clipboard.");
   };
+
   return (
     <div
       className={clsx(

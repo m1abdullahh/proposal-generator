@@ -1,8 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import React from "react";
 
-export const Tooltip = ({
+const Tooltip = ({
   children,
   tooltipText,
 }: {
@@ -27,3 +28,5 @@ export const Tooltip = ({
     </div>
   );
 };
+
+export default Tooltip;

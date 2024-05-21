@@ -26,6 +26,9 @@ import { useRef } from "react";
 
 export function ChadCNDialog() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { mutateAsync, isPending } = useAddFeedback();
+  const queryClient = useQueryClient();
+
   const form = useFormik<{ rating: number; feedback: string }>({
     validationSchema: FeedbackValidationSchema,
     initialValues: {
@@ -39,25 +42,27 @@ export function ChadCNDialog() {
           feedback,
         },
         {
-          onSuccess: (data) => handleSuccess(data),
-          onError: (e) => handleError(e),
+          onSuccess: handleSuccess,
+          onError: handleError,
         }
       );
     },
   });
-  const queryClient = useQueryClient();
+
   const handleSuccess = (data: FeedbackResponse) => {
     toast.success(data.message);
     queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     resetForm();
     closeButtonRef.current?.click();
   };
+
   const handleError = (e: Error) => {
     toast.error(e.message || "Something went wrong!");
   };
-  const { mutateAsync, isPending } = useAddFeedback();
+
   const { values, handleChange, handleSubmit, resetForm, touched, errors } =
     form;
+
   return (
     <Dialog>
       <DialogTrigger asChild>

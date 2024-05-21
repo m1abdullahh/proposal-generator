@@ -19,15 +19,18 @@ export function SideNavBar() {
     removeDataFromLocalStorage();
     location.reload();
   };
+
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const router = useRouter();
   const pathName = usePathname();
+
   useEffect(() => {
     const data = getDataFromLocalStorage();
     if (data.token) {
       setLoggedIn(true);
     }
   }, [router]);
+
   return (
     <aside className="sticky top-0 h-screen w-56 bg-gray-100 text-gray-800 p-4">
       <nav className="space-y-2">

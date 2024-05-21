@@ -6,7 +6,7 @@ import rocketIcon from "../../public/rocket_icon.png";
 import { useGetProfile } from "@/api/useGetProfile";
 import { ClipLoader } from "react-spinners";
 import Link from "next/link";
-import { Tooltip } from "./CustomTooltip";
+import Tooltip from "./CustomTooltip";
 import CreditsIcon from "~/public/credits.png";
 import { ChadCNDialog } from "./ChadCNDialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -17,6 +17,7 @@ export default function Header() {
     isLoading: fetchingProfile,
     isError: hasError,
   } = useGetProfile();
+
   return (
     <>
       <header className="flex items-center justify-between bg-white py-4 px-8 border border-b-gray-200">
